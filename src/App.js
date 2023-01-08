@@ -69,7 +69,7 @@ class App extends Component {
                 src={option.logoUrl}
                 alt="brand logo"
               />
-              {option.name}
+              {option.name} - {option.codes.join(", ")}
             </Box>
           )}
           filterOptions={filterOptions}
@@ -82,7 +82,6 @@ class App extends Component {
           )}
         />
         <BrandCard brand={this.state.selectedBrand} />
-        <button onClick={this.handleCreateBrand}>Add brand</button>
       </div>
     );
   }
