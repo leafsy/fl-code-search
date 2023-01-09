@@ -1,14 +1,20 @@
-import { ref, push, onValue } from "firebase/database";
+import { ref, push, onValue, set, remove } from "firebase/database";
 import { database } from "./database";
 
-const brandsRef = ref(database, "brands");
+export function addBrand(name, codes, logoUrl) {
+  push(ref(database, "brands"), { name, codes, logoUrl });
+}
 
-export function writeBrand(name, codes, logoUrl) {
-  push(brandsRef, { name, codes, logoUrl });
+export function updateBrand(id, name, codes, logoUrl) {
+  set(ref(database, "brands/" + id), { name, codes, logoUrl });
+}
+
+export function removeBrand(id) {
+  remove(ref(database, "brands/" + id));
 }
 
 export function getAllBrands(callback) {
-  return onValue(brandsRef, (snapshot) => {
+  return onValue(ref(database, "brands"), (snapshot) => {
     const brands = Object.entries(snapshot.val())
       .map(([k, v]) => ({
         id: k,
