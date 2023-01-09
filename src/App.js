@@ -131,10 +131,18 @@ class App extends Component {
       >
         <AddIcon />
       </Fab>
-      <Drawer anchor="bottom" open={this.state.addFormOpen}>
+      <Drawer
+        anchor="bottom"
+        open={this.state.addFormOpen}
+        onClose={this.handleAddFormClose}
+      >
         <BrandForm onClose={this.handleAddFormClose} />
       </Drawer>
-      <Drawer anchor="bottom" open={this.state.editFormOpen}>
+      <Drawer
+        anchor="bottom"
+        open={this.state.editFormOpen}
+        onClose={this.handleEditFormClose}
+      >
         <BrandForm
           brand={this.getSelectedBrand()}
           onClose={this.handleEditFormClose}

@@ -62,6 +62,8 @@ export default class BrandForm extends Component {
               {...params}
               label="Product abbreviations"
               variant="outlined"
+              multiline
+              rows={1}
               error={!this.state.codes?.length}
               inputProps={{
                 ...params.inputProps,
@@ -88,9 +90,6 @@ export default class BrandForm extends Component {
             Delete
           </Button>
         )}
-        <Button variant="text" onClick={this.props.onClose}>
-          Cancel
-        </Button>
       </Stack>
     );
   }
