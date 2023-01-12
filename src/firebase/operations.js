@@ -25,13 +25,18 @@ export function getAllBrands(callback) {
   });
 }
 
-export function addEntry(brandId, section, description) {
-  push(ref(database, `brands/${brandId}/entries`), { section, description });
+export function addEntry(brandId, section, keywords, description) {
+  push(ref(database, `brands/${brandId}/entries`), {
+    section,
+    keywords,
+    description,
+  });
 }
 
-export function updateEntry(id, brandId, section, description) {
+export function updateEntry(id, brandId, section, keywords, description) {
   set(ref(database, `brands/${brandId}/entries/${id}`), {
     section,
+    keywords,
     description,
   });
 }

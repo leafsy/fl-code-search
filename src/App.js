@@ -17,7 +17,14 @@ import AddIcon from "@mui/icons-material/Add";
 import BrandForm from "./components/BrandForm";
 
 const filterOptions = createFilterOptions({
-  stringify: (option) => [option.name, ...option.codes].join(" "),
+  stringify: (option) =>
+    [
+      option.name,
+      ...option.codes,
+      ...(option.entries
+        ? Object.values(option.entries).map((entry) => entry.keywords)
+        : []),
+    ].join(" "),
 });
 
 class App extends Component {
@@ -82,8 +89,6 @@ class App extends Component {
       editFormOpen: false,
     });
   };
-
-  getKeywordsFromBrands = () => {};
 
   render = () => (
     <div className="App">

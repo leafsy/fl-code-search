@@ -17,11 +17,21 @@ export default class BrandCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedEntry: undefined,
+      selectedEntryId: undefined,
       addFormOpen: false,
       editFormOpen: false,
     };
   }
+
+  getEntries = () => {
+    const entries = this.props.brand.entries;
+    return entries
+      ? Object.entries(entries).map(([key, value]) => ({
+          id: key,
+          ...value,
+        }))
+      : [];
+  };
 
   handleAddEntry = () => {
     this.setState({
@@ -31,8 +41,8 @@ export default class BrandCard extends Component {
 
   handleEntryClick = (entry) => {
     this.setState({
-      selectedEntry:
-        entry.id === this.state.selectedEntry?.id ? undefined : entry,
+      selectedEntryId:
+        entry.id === this.state.selectedEntryId ? undefined : entry.id,
     });
   };
 
@@ -57,32 +67,30 @@ export default class BrandCard extends Component {
   render() {
     if (!this.props.brand) return null;
 
-    const { id, name, codes, logoUrl, entries } = this.props.brand;
-    const entriesList = entries
-      ? Object.entries(entries)
-          .map(([key, value]) => ({
-            id: key,
-            ...value,
-          }))
-          .sort((e1, e2) => e1.section.localeCompare(e2.section))
-      : [];
-
-    const accordions = entriesList.map((entry) => (
-      <Accordion
-        key={entry.id}
-        expanded={this.state.selectedEntry?.id === entry.id}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          onClick={() => this.handleEntryClick(entry)}
+    const { id, name, codes, logoUrl } = this.props.brand;
+    const accordions = this.getEntries()
+      .sort((e1, e2) => e1.section.localeCompare(e2.section))
+      .map((entry) => (
+        <Accordion
+          key={entry.id}
+          expanded={this.state.selectedEntryId === entry.id}
         >
-          <Typography>{entry.section}</Typography>
-        </AccordionSummary>
-        <AccordionDetails onClick={this.handleEntryEdit}>
-          <Typography>{entry.description}</Typography>
-        </AccordionDetails>
-      </Accordion>
-    ));
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.handleEntryClick(entry)}
+          >
+            <Typography>{entry.section}</Typography>
+          </AccordionSummary>
+          <AccordionDetails onClick={this.handleEntryEdit}>
+            {entry.keywords && (
+              <Typography sx={{ mb: 2 }}>Keywords: {entry.keywords}</Typography>
+            )}
+            <Typography color="text.secondary">
+              {entry.description || "(Enter notes)"}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      ));
 
     return (
       <Fragment>
@@ -130,7 +138,11 @@ export default class BrandCard extends Component {
         >
           <EntryForm
             brandId={id}
-            entry={this.state.selectedEntry}
+            entry={
+              this.getEntries().find(
+                (entry) => entry.id === this.state.selectedEntryId
+              ) ?? null
+            }
             onClose={this.handleEditFormClose}
           />
         </Drawer>

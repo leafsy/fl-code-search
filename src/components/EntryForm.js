@@ -17,6 +17,7 @@ export default class EntryForm extends Component {
     this.state = {
       id: props.entry?.id ?? undefined,
       section: props.entry?.section ?? "",
+      keywords: props.entry?.keywords ?? "",
       description: props.entry?.description ?? "",
     };
   }
@@ -25,16 +26,20 @@ export default class EntryForm extends Component {
     this.setState({ section: e.target.value });
   };
 
+  handleKeywordsChange = (e) => {
+    this.setState({ keywords: e.target.value.toUpperCase() });
+  };
+
   handleDescriptionChange = (e) => {
     this.setState({ description: e.target.value });
   };
 
   handleSave = () => {
-    const { id, section, description } = this.state;
+    const { id, section, keywords, description } = this.state;
     if (id) {
-      updateEntry(id, this.props.brandId, section, description);
+      updateEntry(id, this.props.brandId, section, keywords, description);
     } else {
-      addEntry(this.props.brandId, section, description);
+      addEntry(this.props.brandId, section, keywords, description);
     }
     this.props.onClose();
   };
@@ -66,6 +71,14 @@ export default class EntryForm extends Component {
           </Select>
         </FormControl>
         <TextField
+          label="Keywords"
+          variant="outlined"
+          value={this.state.keywords}
+          onChange={this.handleKeywordsChange}
+          inputProps={{ style: { textTransform: "uppercase" } }}
+        />
+        <TextField
+          multiline
           label="Notes"
           variant="outlined"
           value={this.state.description}
