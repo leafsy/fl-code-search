@@ -6,11 +6,11 @@ export function addBrand(name, codes, logoUrl) {
 }
 
 export function updateBrand(id, name, codes, logoUrl) {
-  set(ref(database, "brands/" + id), { name, codes, logoUrl });
+  set(ref(database, `brands/${id}`), { name, codes, logoUrl });
 }
 
 export function removeBrand(id) {
-  remove(ref(database, "brands/" + id));
+  remove(ref(database, `brands/${id}`));
 }
 
 export function getAllBrands(callback) {
@@ -23,4 +23,19 @@ export function getAllBrands(callback) {
       .sort((b1, b2) => b1.name.localeCompare(b2.name));
     callback(brands);
   });
+}
+
+export function addEntry(brandId, section, description) {
+  push(ref(database, `brands/${brandId}/entries`), { section, description });
+}
+
+export function updateEntry(id, brandId, section, description) {
+  set(ref(database, `brands/${brandId}/entries/${id}`), {
+    section,
+    description,
+  });
+}
+
+export function removeEntry(id, brandId) {
+  remove(ref(database, `brands/${brandId}/entries/${id}`));
 }
