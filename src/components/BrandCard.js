@@ -9,6 +9,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Drawer,
 } from "@mui/material";
 import EntryForm from "./EntryForm";
@@ -82,6 +83,18 @@ export default class BrandCard extends Component {
             <Typography>{entry.section}</Typography>
           </AccordionSummary>
           <AccordionDetails onClick={this.handleEntryEdit}>
+            {entry.photoUrl && (
+              <Box
+                component="img"
+                sx={{
+                  height: 300,
+                  width: "100%",
+                  objectFit: "contain",
+                }}
+                alt="product photo"
+                src={entry.photoUrl}
+              />
+            )}
             {entry.keywords && (
               <Typography sx={{ mb: 2 }}>Keywords: {entry.keywords}</Typography>
             )}

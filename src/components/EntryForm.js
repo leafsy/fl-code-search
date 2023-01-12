@@ -19,6 +19,7 @@ export default class EntryForm extends Component {
       section: props.entry?.section ?? "",
       keywords: props.entry?.keywords ?? "",
       description: props.entry?.description ?? "",
+      photoUrl: props.entry?.photoUrl ?? "",
     };
   }
 
@@ -34,12 +35,23 @@ export default class EntryForm extends Component {
     this.setState({ description: e.target.value });
   };
 
+  handlePhotoURLChange = (e) => {
+    this.setState({ photoUrl: e.target.value });
+  };
+
   handleSave = () => {
-    const { id, section, keywords, description } = this.state;
+    const { id, section, keywords, description, photoUrl } = this.state;
     if (id) {
-      updateEntry(id, this.props.brandId, section, keywords, description);
+      updateEntry(
+        id,
+        this.props.brandId,
+        section,
+        keywords,
+        description,
+        photoUrl
+      );
     } else {
-      addEntry(this.props.brandId, section, keywords, description);
+      addEntry(this.props.brandId, section, keywords, description, photoUrl);
     }
     this.props.onClose();
   };
@@ -83,6 +95,12 @@ export default class EntryForm extends Component {
           variant="outlined"
           value={this.state.description}
           onChange={this.handleDescriptionChange}
+        />
+        <TextField
+          label="Photo URL"
+          variant="outlined"
+          value={this.state.photoUrl}
+          onChange={this.handlePhotoURLChange}
         />
         <Button
           variant="contained"
