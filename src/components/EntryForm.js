@@ -72,6 +72,10 @@ export default class EntryForm extends Component {
             label="Section"
             onChange={this.handleSectionChange}
           >
+            <MenuItem value={"Deli"}>Deli</MenuItem>
+            <MenuItem value={"Frontend"}>Frontend</MenuItem>
+            <MenuItem value={"Market"}>Market</MenuItem>
+            <MenuItem value={"Produce"}>Produce</MenuItem>
             <MenuItem value={"Aisle 1"}>Aisle 1</MenuItem>
             <MenuItem value={"Aisle 2"}>Aisle 2</MenuItem>
             <MenuItem value={"Aisle 3"}>Aisle 3</MenuItem>
@@ -80,6 +84,13 @@ export default class EntryForm extends Component {
             <MenuItem value={"Aisle 6"}>Aisle 6</MenuItem>
             <MenuItem value={"Aisle 7"}>Aisle 7</MenuItem>
             <MenuItem value={"Aisle 8"}>Aisle 8</MenuItem>
+            <MenuItem value={"Aisle 9"}>Aisle 9</MenuItem>
+            <MenuItem value={"Aisle 10"}>Aisle 10</MenuItem>
+            <MenuItem value={"Aisle 11"}>Aisle 11</MenuItem>
+            <MenuItem value={"Aisle 12"}>Aisle 12</MenuItem>
+            <MenuItem value={"Aisle 13"}>Aisle 13</MenuItem>
+            <MenuItem value={"Aisle 14"}>Aisle 14</MenuItem>
+            <MenuItem value={"Aisle 15"}>Aisle 15</MenuItem>
           </Select>
         </FormControl>
         <TextField
