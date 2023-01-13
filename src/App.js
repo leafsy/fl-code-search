@@ -16,6 +16,7 @@ import BrandCard from "./components/BrandCard";
 import AddIcon from "@mui/icons-material/Add";
 import BrandForm from "./components/BrandForm";
 
+// Gather all relevant keywords of a brand for Autocomplete purposes.
 const filterOptions = createFilterOptions({
   stringify: (option) =>
     [
@@ -29,15 +30,22 @@ const filterOptions = createFilterOptions({
 
 class App extends Component {
   unsubscribe;
+  editable;
 
   constructor(props) {
     super(props);
+
     this.state = {
       brands: [],
       selectedBrandId: undefined,
       addFormOpen: false,
       editFormOpen: false,
     };
+
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+    this.editable = params.edit === "";
   }
 
   componentDidMount() {
@@ -74,7 +82,7 @@ class App extends Component {
 
   handleBrandCardEdit = () => {
     this.setState({
-      editFormOpen: true,
+      editFormOpen: this.editable && true,
     });
   };
 
@@ -125,17 +133,20 @@ class App extends Component {
         )}
       />
       <BrandCard
+        editable={this.editable}
         brand={this.getSelectedBrand()}
         onEdit={this.handleBrandCardEdit}
       />
-      <Fab
-        className="add-fab"
-        color="primary"
-        aria-label="add"
-        onClick={this.handleAddFabClick}
-      >
-        <AddIcon />
-      </Fab>
+      {this.editable && (
+        <Fab
+          className="add-fab"
+          color="primary"
+          aria-label="add"
+          onClick={this.handleAddFabClick}
+        >
+          <AddIcon />
+        </Fab>
+      )}
       <Drawer
         anchor="bottom"
         open={this.state.addFormOpen}

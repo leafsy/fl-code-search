@@ -49,7 +49,7 @@ export default class BrandCard extends Component {
 
   handleEntryEdit = () => {
     this.setState({
-      editFormOpen: true,
+      editFormOpen: this.props.editable && true,
     });
   };
 
@@ -127,14 +127,16 @@ export default class BrandCard extends Component {
 
         <div>
           {accordions}
-          <Accordion
-            onClick={this.handleAddEntry}
-            expanded={this.state.editFormOpen}
-          >
-            <AccordionSummary expandIcon={<AddIcon />}>
-              <Typography>Add new section</Typography>
-            </AccordionSummary>
-          </Accordion>
+          {this.props.editable && (
+            <Accordion
+              onClick={this.handleAddEntry}
+              expanded={this.state.editFormOpen}
+            >
+              <AccordionSummary expandIcon={<AddIcon />}>
+                <Typography>Add new section</Typography>
+              </AccordionSummary>
+            </Accordion>
+          )}
         </div>
 
         <Drawer
