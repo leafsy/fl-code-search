@@ -1,4 +1,4 @@
-import { ref, push, onValue, set, remove } from "firebase/database";
+import { ref, push, onValue, set, remove, update } from "firebase/database";
 import { database } from "./database";
 
 export function addBrand(name, codes, logoUrl) {
@@ -6,7 +6,7 @@ export function addBrand(name, codes, logoUrl) {
 }
 
 export function updateBrand(id, name, codes, logoUrl) {
-  set(ref(database, `brands/${id}`), { name, codes, logoUrl });
+  update(ref(database, `brands/${id}`), { name, codes, logoUrl });
 }
 
 export function removeBrand(id) {
