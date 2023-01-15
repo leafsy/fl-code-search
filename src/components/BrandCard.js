@@ -80,7 +80,9 @@ export default class BrandCard extends Component {
             expandIcon={<ExpandMoreIcon />}
             onClick={() => this.handleEntryClick(entry)}
           >
-            <Typography>{entry.section}</Typography>
+            <Typography>
+              ({entry.section}) {entry.keywords ?? ""}
+            </Typography>
           </AccordionSummary>
           <AccordionDetails onClick={this.handleEntryEdit}>
             {entry.photoUrl && (
@@ -94,9 +96,6 @@ export default class BrandCard extends Component {
                 alt="product photo"
                 src={entry.photoUrl}
               />
-            )}
-            {entry.keywords && (
-              <Typography sx={{ mb: 2 }}>Keywords: {entry.keywords}</Typography>
             )}
             <Typography color="text.secondary">
               {entry.description || "(Enter notes)"}
